@@ -1,0 +1,35 @@
+﻿@model SimpleForum.Models.Post
+
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<h1>Create Post</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PostDescription" class="control-label"></label>
+                <input asp-for="PostDescription" class="form-control" />
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+                <input type="hidden" asp-for="DatePosted" />
+                <input type="hidden" asp-for="PostAuthor" />
+                <input type="hidden" asp-for="Thread" />
+                <input type="hidden" asp-for="UserId" />6
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CreatePost" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to the List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

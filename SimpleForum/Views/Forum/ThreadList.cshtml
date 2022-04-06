@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SimpleForum.Models.ForumThread>
+
+@{
+    ViewData["Title"] = "Index";
+    var categoryId = ViewData["catId"];
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateThread" asp-route-id="@categoryId">Create New</a>
+    <ul>
+        <a>@categoryId</a>
+    </ul>
+</p>
+
+
+@if(Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Thread Name
+                </th>
+                <th>
+                    No. of Posts
+                </th>
+                <th>
+                    Latest
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="forum" asp-action="PostList" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ThreadTitle)</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SimpleForum.Models.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h1>Categories</h1>
+
+<p>
+    <a asp-action="CreateCategory">Create New Category</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                No. of Threads
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="forum" asp-action="ThreadList" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
