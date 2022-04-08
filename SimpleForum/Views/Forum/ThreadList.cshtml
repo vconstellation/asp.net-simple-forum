@@ -5,13 +5,17 @@
     var categoryId = ViewData["catId"];
 }
 
-<h1>Index</h1>
+<h1>Thread</h1>
 
 <p>
     <a asp-action="CreateThread" asp-route-id="@categoryId">Create New</a>
     <ul>
         <a>@categoryId</a>
     </ul>
+</p>
+
+<p>
+    <a asp-action="Index">Categories</a>
 </p>
 
 
@@ -38,8 +42,20 @@
                     <td>
                         <a asp-controller="forum" asp-action="PostList" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ThreadTitle)</a>
                     </td>
+                    <td>
+                        if (@item.Posts.Any()) 
+                        {                            
+                            <a>5</a>
+                        }
+                        else
+                        {                            
+                            <a>0</a>
+                        }
+                        
+                    </td>
                 </tr>
             }
+            <a></a>
         </tbody>
     </table>
 }

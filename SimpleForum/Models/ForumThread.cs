@@ -20,7 +20,7 @@ namespace SimpleForum.Models
         public IdentityUser ThreadAuthor { get; set; }
 
         //onetomanyposts
-        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Post> Posts { get; set; }
 
         //onetomanycategories
         [Required]

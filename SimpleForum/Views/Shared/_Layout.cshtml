@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<IdentityUser> signInManager;
+@inject UserManager<IdentityUser> userManager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,7 @@
                         {
                             <li class="nav-item">
                                 <form method="POST" asp-action="logout" asp-controller="account" class="nav-link">
-                                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                                    <button type="submit" class="nav-link btn btn-link">@userManager.GetUserName(User) - Logout</button>
                                 </form>
                             </li>
                         }

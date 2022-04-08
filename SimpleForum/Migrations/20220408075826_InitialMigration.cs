@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleForum.Migrations
 {
-    public partial class AddModelsOne : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -204,14 +204,15 @@ namespace SimpleForum.Migrations
                     PostDescription = table.Column<string>(type: "TEXT", nullable: false),
                     DatePosted = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    PostAuthorId = table.Column<string>(type: "TEXT", nullable: false),
                     ThreadId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Posts_AspNetUsers_PostAuthorId",
+                        column: x => x.PostAuthorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -261,14 +262,14 @@ namespace SimpleForum.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Posts_PostAuthorId",
+                table: "Posts",
+                column: "PostAuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_ThreadId",
                 table: "Posts",
                 column: "ThreadId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Posts_UserId",
-                table: "Posts",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Threads_CategoryId",

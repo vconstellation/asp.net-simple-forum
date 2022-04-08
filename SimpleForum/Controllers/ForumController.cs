@@ -52,7 +52,7 @@ namespace SimpleForum.Controllers
             {
                 Console.WriteLine(item.ErrorMessage);
             }
-            Console.WriteLine("return to category");
+
             return View(category);
         }
 
@@ -61,9 +61,6 @@ namespace SimpleForum.Controllers
             var category = await _context.Categories.FindAsync(id);
 
             ViewData["catId"] = id;
-            Console.WriteLine("THIS IS ID FROM GET = " + id);
-
-            Console.WriteLine(category.ToString);
 
             if (category == null)
             {
@@ -92,8 +89,6 @@ namespace SimpleForum.Controllers
             //thread.ThreadAuthor = await _userManager.GetUserAsync(User);
             //thread.Category = await _context.Categories.FindAsync(1);
 
-            Console.WriteLine(id);
-            Console.WriteLine("THIS IS AN ID !!");
             _context.Add(newThread);
             await _context.SaveChangesAsync();
 
@@ -106,9 +101,9 @@ namespace SimpleForum.Controllers
                     Console.WriteLine(item.ErrorMessage);
                 }
             }
- 
 
-            return View(thread);
+
+            return RedirectToAction(nameof(ThreadList), new { id = id});
         }
 
         public IActionResult CreateThread()
@@ -129,6 +124,12 @@ namespace SimpleForum.Controllers
             }
 
             var model = await _context.Posts.Where(n => n.Thread == thread).ToListAsync();
+
+            Console.WriteLine("WRITING POST USER FROM THE CONTROLLER");
+            foreach (var item in model)
+            {
+                Console.WriteLine(item);
+            }
 
             return View(model);
         }
@@ -154,7 +155,7 @@ namespace SimpleForum.Controllers
             _context.Add(newPost);
             await _context.SaveChangesAsync();
 
-            return View(post);
+            return RedirectToAction(nameof(PostList), new { id = id});
         }
 
         public async Task<IActionResult> EditPost(int id)
@@ -221,6 +222,34 @@ namespace SimpleForum.Controllers
 
             return View(post);
           
+        }
+
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
+        }
+
+        [HttpPost, ActionName("DeletePost")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePostConfirmed(int id)
+        {
+            var post = await _context.Posts.FindAsync(id);
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
         
     }

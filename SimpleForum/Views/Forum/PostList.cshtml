@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SimpleForum.Models.Post>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<SimpleForum.Models.Post>
+@inject UserManager<IdentityUser> userManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -14,6 +16,7 @@
     </ul>
 </p>
 
+
 @if(Model.Any())
 {
     <table class="table">
@@ -27,16 +30,23 @@
                     <td>
                         <a>@item.DatePosted</a>
                     </td>
-                    <td>
-                        <a>@item.PostAuthor</a>
-                    </td>
-                    <td>
-                        <a asp-action="EditPost" asp-route-id="@item.Id">Edit</a>
-                    </td>
+                    @if (userManager.GetUserId(User).Equals(@item.UserId))
+                    {
+                        <td>
+                            <a asp-action="EditPost" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="DeletePost" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }
+
                 </tr>
             }
         </tbody>
     </table>
+
+    <a>Liczba postów:</a>
+    <a>@Model.Count()</a>
 }
 else
 {

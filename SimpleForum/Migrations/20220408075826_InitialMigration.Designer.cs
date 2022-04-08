@@ -11,8 +11,8 @@ using SimpleForum.Data;
 namespace SimpleForum.Migrations
 {
     [DbContext(typeof(SimpleForumContext))]
-    [Migration("20220406095008_RenameAuthor")]
-    partial class RenameAuthor
+    [Migration("20220408075826_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
