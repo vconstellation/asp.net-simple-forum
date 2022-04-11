@@ -33,7 +33,7 @@ namespace SimpleForum.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index));
+                    return Redirect("/");
                 }
 
                 foreach (var err in result.Errors)
@@ -49,7 +49,7 @@ namespace SimpleForum.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("/");
         }
 
         public IActionResult Login()
@@ -67,7 +67,7 @@ namespace SimpleForum.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return Redirect("/");
                 }
 
                 ModelState.AddModelError("", "Invalid credentials provided.");

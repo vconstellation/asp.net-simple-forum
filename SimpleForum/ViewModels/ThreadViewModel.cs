@@ -1,29 +1,32 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SimpleForum.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace SimpleForum.Models
+namespace SimpleForum.ViewModels
 {
-    public class ForumThread
+    public class ThreadViewModel
     {
+        public int ThreadId { get; set; }
 
-        public int Id { get; set; }
+        public int PostId { get; set; }
 
         [Required]
         public string ThreadTitle { get; set; }
 
-
-        //onetooneauthor
         [Required]
         public string UserId { get; set; }
 
         [Required]
         public IdentityUser ThreadAuthor { get; set; }
 
-        //onetomanyposts
-        //public virtual ICollection<Post> Posts { get; set; }
-
-        //onetomanycategories
         [Required]
         public Category Category { get; set; }
+
+        [Required]
+        public string PostDescription { get; set; }
+
+        public DateTime DatePosted { get; set; }
+
+        public ForumThread Thread { get; set; }
     }
 }

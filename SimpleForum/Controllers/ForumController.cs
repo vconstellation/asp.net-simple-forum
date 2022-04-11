@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimpleForum.Data;
 using SimpleForum.Models;
+using SimpleForum.ViewModels;
 
 namespace SimpleForum.Controllers
 {
@@ -76,8 +77,6 @@ namespace SimpleForum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateThread(int id, ForumThread thread)
         {
-
-
             ForumThread newThread = new ForumThread
             {
                 ThreadTitle = thread.ThreadTitle,
@@ -88,6 +87,7 @@ namespace SimpleForum.Controllers
             //thread.UserId = _userManager.GetUserId(User);
             //thread.ThreadAuthor = await _userManager.GetUserAsync(User);
             //thread.Category = await _context.Categories.FindAsync(1);
+
 
             _context.Add(newThread);
             await _context.SaveChangesAsync();
@@ -153,6 +153,7 @@ namespace SimpleForum.Controllers
             };
 
             _context.Add(newPost);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(PostList), new { id = id});
@@ -247,6 +248,40 @@ namespace SimpleForum.Controllers
         {
             var post = await _context.Posts.FindAsync(id);
             _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult CreateThreadPost()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateThreadPost(int id, ThreadViewModel model)
+        {
+            ForumThread newThread = new ForumThread
+            {
+                ThreadTitle = model.ThreadTitle,
+                UserId = _userManager.GetUserId(User),
+                ThreadAuthor = await _userManager.GetUserAsync(User),
+                Category = await _context.Categories.FindAsync(id),
+            };
+
+            Post newPost = new Post
+            {
+                PostDescription = model.PostDescription,
+                DatePosted = DateTime.Now,
+                UserId = _userManager.GetUserId(User),
+                PostAuthor = await _userManager.GetUserAsync(User),
+                Thread = newThread,
+            };
+
+            _context.Add(newThread);
+            _context.Add(newPost);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

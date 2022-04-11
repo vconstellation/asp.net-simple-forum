@@ -10,7 +10,7 @@ namespace SimpleForum.Models
         public string Name { get; set; }
 
         //onetomanythread
-        public ICollection<ForumThread>? Threads { get; set; }
+        //public ICollection<ForumThread>? Threads { get; set; }
 
 
     }

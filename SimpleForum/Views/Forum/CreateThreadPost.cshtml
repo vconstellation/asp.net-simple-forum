@@ -1,0 +1,38 @@
+﻿@model SimpleForum.ViewModels.ThreadViewModel
+
+@{
+    ViewData["Title"] = "CreateThreadPost";
+}
+
+<h1>Create Thread-Post</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateThreadPost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ThreadTitle" class="control-label"></label>
+                <input asp-for="ThreadTitle" class="form-control" />
+                <span asp-validation-for="ThreadTitle" class="text-danger"></span>
+                <label asp-for="PostDescription" class="control-label"></label>
+                <input asp-for="PostDescription" class="form-control" />
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+                <input type="hidden" asp-for="UserId" />
+                <input type="hidden" asp-for="ThreadAuthor" />
+                <input type="hidden" asp-for="Category" />
+                <input type="hidden" asp-for="Thread" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CreateThreadPost" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to the List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
